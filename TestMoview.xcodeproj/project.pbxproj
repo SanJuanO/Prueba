@@ -40,6 +40,8 @@
 		14A5350328CEAB310020010E /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 14A5350228CEAB310020010E /* Kingfisher */; };
 		14B9671128CEB789006CB5C6 /* HudView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9671028CEB789006CB5C6 /* HudView.swift */; };
 		14B9671328CECC77006CB5C6 /* CoreDataService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9671228CECC77006CB5C6 /* CoreDataService.swift */; };
+		14B9671528CEE960006CB5C6 /* MoviesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14B9671428CEE960006CB5C6 /* MoviesCell.swift */; };
+		14B9671B28CEEFAE006CB5C6 /* YoutubeKit in Frameworks */ = {isa = PBXBuildFile; productRef = 14B9671A28CEEFAE006CB5C6 /* YoutubeKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -77,6 +79,7 @@
 		144D208E28CEAA2F003D9A1B /* Constraints.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constraints.swift; sourceTree = "<group>"; };
 		14B9671028CEB789006CB5C6 /* HudView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HudView.swift; sourceTree = "<group>"; };
 		14B9671228CECC77006CB5C6 /* CoreDataService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CoreDataService.swift; sourceTree = "<group>"; };
+		14B9671428CEE960006CB5C6 /* MoviesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoviesCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,6 +88,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				14A5350328CEAB310020010E /* Kingfisher in Frameworks */,
+				14B9671B28CEEFAE006CB5C6 /* YoutubeKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -191,6 +195,7 @@
 				144D208328CEAA06003D9A1B /* LoginTextField.swift */,
 				144D208228CEAA06003D9A1B /* NavBarView.swift */,
 				144D208628CEAA06003D9A1B /* TableViewCell.swift */,
+				14B9671428CEE960006CB5C6 /* MoviesCell.swift */,
 			);
 			path = view;
 			sourceTree = "<group>";
@@ -213,6 +218,7 @@
 			name = TestMoview;
 			packageProductDependencies = (
 				14A5350228CEAB310020010E /* Kingfisher */,
+				14B9671A28CEEFAE006CB5C6 /* YoutubeKit */,
 			);
 			productName = TestMoview;
 			productReference = 144D204028CEA96E003D9A1B /* TestMoview.app */;
@@ -244,6 +250,8 @@
 			mainGroup = 144D203728CEA96E003D9A1B;
 			packageReferences = (
 				14A5350128CEAB310020010E /* XCRemoteSwiftPackageReference "Kingfisher" */,
+				14B9671628CEEAE7006CB5C6 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */,
+				14B9671928CEEFAE006CB5C6 /* XCRemoteSwiftPackageReference "YoutubeKit" */,
 			);
 			productRefGroup = 144D204128CEA96E003D9A1B /* Products */;
 			projectDirPath = "";
@@ -294,6 +302,7 @@
 				144D207928CEA9DA003D9A1B /* Authorize.swift in Sources */,
 				144D205F28CEA9C7003D9A1B /* DetailMovieViewController.swift in Sources */,
 				144D206228CEA9C7003D9A1B /* ProfileViewController.swift in Sources */,
+				14B9671528CEE960006CB5C6 /* MoviesCell.swift in Sources */,
 				144D208D28CEAA18003D9A1B /* UIFont+extensions.swift in Sources */,
 				144D208B28CEAA06003D9A1B /* TableViewCell.swift in Sources */,
 				144D207F28CEA9DA003D9A1B /* KeychainService.swift in Sources */,
@@ -518,6 +527,22 @@
 				kind = branch;
 			};
 		};
+		14B9671628CEEAE7006CB5C6 /* XCRemoteSwiftPackageReference "YouTubePlayerKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SvenTiigi/YouTubePlayerKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+		14B9671928CEEFAE006CB5C6 /* XCRemoteSwiftPackageReference "YoutubeKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/rinov/YoutubeKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.6.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -525,6 +550,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 14A5350128CEAB310020010E /* XCRemoteSwiftPackageReference "Kingfisher" */;
 			productName = Kingfisher;
+		};
+		14B9671A28CEEFAE006CB5C6 /* YoutubeKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 14B9671928CEEFAE006CB5C6 /* XCRemoteSwiftPackageReference "YoutubeKit" */;
+			productName = YoutubeKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 

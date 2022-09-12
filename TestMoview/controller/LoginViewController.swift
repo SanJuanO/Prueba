@@ -11,19 +11,20 @@ class LoginViewController: UIViewController {
     
     let httpRequest = HttpRequest.shared
     var token = ""
+    let userDefaults = UserDefaults.standard
     
     private lazy var imageView: UIImageView = {
         let iView = UIImageView()
         iView.translatesAutoresizingMaskIntoConstraints = false
         iView.contentMode = .scaleAspectFit
-        iView.image = UIImage(named: "logofondoblanco")
+        iView.image = UIImage(named: "logo")
         return iView
     }()
     
    private lazy var backgroundImageView: UIImageView = {
         let iView = UIImageView()
        iView.translatesAutoresizingMaskIntoConstraints = false
-       iView.image = UIImage(named: "iniciofondo")
+       iView.image = UIImage(named: "fondo")
         return iView
     }()
     
@@ -120,7 +121,7 @@ class LoginViewController: UIViewController {
 
         imageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
         imageView.bottomAnchor.constraint(equalTo: view.centerYAnchor, constant: -30).isActive = true
-        imageView.heightAnchor.constraint(equalToConstant: 60).isActive = true
+        imageView.heightAnchor.constraint(equalToConstant: 120).isActive = true
         imageView.widthAnchor.constraint(equalTo: imageView.heightAnchor).isActive = true
         
         usernameTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 40).isActive = true
@@ -177,6 +178,7 @@ print("error")
                                         self.hudView.isHidden = true
 
                                         if authorizeMapper.success {
+                                            self.userDefaults.set(self.usernameTextView.text!, forKey: "email")
                                             self.navigationController?.pushViewController(MainViewController(), animated: true)
 
                                         } else {

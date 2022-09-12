@@ -48,4 +48,22 @@ private enum CodingKeys: String, CodingKey {
 }
 }
 
+struct Trailers: Decodable {
+    let identifier: Int
+    let results: [Movies]
+    
+    private enum CodingKeys: String, CodingKey {
+        case identifier = "id"
+        case results
+    }
+}
 
+struct Movies: Decodable {
+    let site: String
+    let name: String
+    let key: String
+
+private enum CodingKeys: String, CodingKey {
+    case name, key, site
+}
+}

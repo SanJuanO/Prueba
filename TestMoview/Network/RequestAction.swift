@@ -73,7 +73,7 @@ enum Endpoint {
     case toprated
     case tvontheair
     case tvairingtoday
-
+    case videomovis(String)
 
     
     var method: Method {
@@ -84,6 +84,7 @@ enum Endpoint {
         case .toprated: return .GET
         case .tvontheair: return .GET
         case .tvairingtoday: return .GET
+        case .videomovis: return .GET
         }
     }
      
@@ -95,6 +96,7 @@ enum Endpoint {
         case .toprated: return "movie/top_rated"
         case .tvontheair: return "tv/on_the_air"
         case .tvairingtoday: return "tv/airing_today"
+        case .videomovis(let identifier): return "movie/\(identifier)/videos"
             
         }
     }

@@ -95,6 +95,8 @@ class ProfileViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         self.navigationController?.navigationBar.isTranslucent = true
+        let userDefaults = UserDefaults.standard
+        self.emailLabel.text = userDefaults.string(forKey: "email")
     }
     
     
@@ -114,8 +116,6 @@ class ProfileViewController: UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(imageView)
         view.addSubview(stackInfo)
-         stackInfo.addArrangedSubview(nameLabel)
-         stackInfo.addArrangedSubview(phoneLabel)
          stackInfo.addArrangedSubview(emailLabel)
          view.addSubview(favoriteLabel)
         view.addSubview(collectionView)

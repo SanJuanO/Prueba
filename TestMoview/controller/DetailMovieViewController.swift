@@ -10,8 +10,10 @@ import UIKit
 
 class DetailMovieViewController: UIViewController {
     
-    
-    
+    let httpRequest = HttpRequest.shared
+    var result: [Movies] = []
+    var identifier = ""
+
     
     public lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -39,16 +41,31 @@ class DetailMovieViewController: UIViewController {
         stack.spacing = 4
         return stack
     }()
-    private lazy var imagefavoriteView: UIImageView = {
+    private let stackcalf: UIStackView = {
+        let stack = UIStackView(frame: .zero)
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        stack.axis = .horizontal
+        stack.distribution = .equalSpacing
+        stack.alignment = .leading
+        stack.spacing = 6
+        return stack
+    }()
+    private lazy var imagefavoriteView: UIButton = {
+        let cImageView = UIButton()
+        cImageView.translatesAutoresizingMaskIntoConstraints = false
+        cImageView.contentMode = .scaleAspectFill
+        cImageView.setImage(UIImage(named: "heartall"), for: .normal)
+        return cImageView
+    }()
+
+    private lazy var imagecalfView: UIImageView = {
         let cImageView = UIImageView()
         cImageView.translatesAutoresizingMaskIntoConstraints = false
-        cImageView.contentMode = .scaleToFill
-        cImageView.backgroundColor = .blue
-        cImageView.layer.cornerRadius = 8
+        cImageView.image = UIImage.init(named: "fillStarIcon")
         cImageView.contentMode = .scaleAspectFill
         return cImageView
     }()
-    
+        
     public lazy var dateLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -83,6 +100,14 @@ class DetailMovieViewController: UIViewController {
         return label
     }()
 
+    internal lazy var hudView: HudView = {
+        let hView = HudView()
+        hView.translatesAutoresizingMaskIntoConstraints = false
+        hView.layer.masksToBounds = true
+        hView.layer.cornerRadius = 10.0
+        hView.isHidden = true
+        return hView
+    }()
     
     private lazy var collectionView: UICollectionView = {
         let cCollectionView = UICollectionView(frame: .zero,
@@ -95,8 +120,8 @@ class DetailMovieViewController: UIViewController {
         cCollectionView.backgroundColor = .clear
         cCollectionView.contentInset = UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
         cCollectionView.keyboardDismissMode = .onDrag
-        cCollectionView.register(CollectionViewCell.self,
-                                 forCellWithReuseIdentifier: CollectionViewCell.cellName)
+        cCollectionView.register(MoviesCell.self,
+                                 forCellWithReuseIdentifier: MoviesCell.cellName)
         return cCollectionView
     }()
  
@@ -110,12 +135,34 @@ class DetailMovieViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         setupController()
+        makeReques()
+        
     }
     
     override func viewDidDisappear(_ animated: Bool) {
         super.viewDidDisappear(true)
     }
     
+    
+    
+    func makeReques() {
+        self.hudView.isHidden = false
+        let requestAction = RequestAction(endpoint: .videomovis(self.identifier))
+         httpRequest.makeRequest(onAction: requestAction, response: 
+                                    Trailers.self,
+                                 onSuccess: { movies in
+             DispatchQueue.main.async {
+                 self.hudView.isHidden = true
+             self.result = movies.results
+             self.collectionView.reloadData()
+             }
+         }, onFailure: { (_, _) in
+             DispatchQueue.main.async {
+                 self.hudView.isHidden = true
+                 print("error")
+              }
+          })
+    }
     
     func configure(result: ResultMovies) {
         let url = URL(string: Prueba.image + result.posterpath)
@@ -124,6 +171,7 @@ class DetailMovieViewController: UIViewController {
         self.dateLabel.text = result.releasedate
        self.califLabel.text = "\(result.popularity)"
         self.descriptionLabel.text = result.overview
+        self.identifier = "\(result.identifier)"
     }
     
      func setupController() {
@@ -131,17 +179,25 @@ class DetailMovieViewController: UIViewController {
         view.addSubview(titleLabel)
         view.addSubview(imageView)
         view.addSubview(stackInfo)
-         stackInfo.addArrangedSubview(imagefavoriteView)
          stackInfo.addArrangedSubview(dateLabel)
-         stackInfo.addArrangedSubview(califLabel)
+         stackInfo.addArrangedSubview(stackcalf)
+         stackcalf.addArrangedSubview(imagecalfView)
+         stackcalf.addArrangedSubview(califLabel)
+         stackInfo.addArrangedSubview(imagefavoriteView)
          view.addSubview(descriptionLabel)
          view.addSubview(trailerLabel)
         view.addSubview(collectionView)
+         
+          view.addSubview(hudView)
+          hudView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+          hudView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+          hudView.heightAnchor.constraint(equalTo: hudView.widthAnchor).isActive = true
+          hudView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+          
 
          titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.padding16P).isActive = true
-         titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: Constraints.padding32P).isActive = true
+         titleLabel.topAnchor.constraint(equalTo: view.topAnchor, constant: Constraints.padding42P).isActive = true
          titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Constraints.padding16N).isActive = true
-         titleLabel.heightAnchor.constraint(equalToConstant: Constraints.padding24P).isActive = true
 
          imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: Constraints.padding8P).isActive = true
          imageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Constraints.padding32P).isActive = true
@@ -157,6 +213,12 @@ class DetailMovieViewController: UIViewController {
          descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.padding16P).isActive = true
          descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Constraints.padding16N).isActive = true
          
+         imagefavoriteView.heightAnchor.constraint(equalToConstant: Constraints.padding32P).isActive = true
+         imagefavoriteView.widthAnchor.constraint(equalTo: imagefavoriteView.heightAnchor).isActive = true
+
+         imagecalfView.heightAnchor.constraint(equalToConstant: Constraints.padding16P).isActive = true
+         imagecalfView.widthAnchor.constraint(equalTo: imagecalfView.heightAnchor).isActive = true
+
          trailerLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: Constraints.padding42P).isActive = true
          trailerLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.padding16P).isActive = true
          trailerLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Constraints.padding16N).isActive = true
@@ -180,25 +242,6 @@ class DetailMovieViewController: UIViewController {
     
     private func showMainController() {
         self.navigationController?.pushViewController(MainViewController(), animated: true)
-
-      /*
-    let requestAction = RequestAction(endpoint: .authenticate,
-                                          body: LoginMapper(telefono: usernameTextView.text, password: passwordTextView.text))
-        self.hudView.isHidden = false
-       httpRequest.makeRequest(onAction: requestAction,
-                                response: AuthorizeMapper.self,
-                               onSuccess: { (authorizeMapper) in
-                                    DispatchQueue.main.async {
-                                            self.hudView.isHidden = true
-                                        if authorizeMapper.success {
-                                            EmbajadoresVolvo.account = authorizeMapper.datos
-                                                AppDelegate.shared.rootViewController.switchToMain()
-                                            } else {
-                                                self.showErrorAlert(message: authorizeMapper.message)
-                                            }
-                                    }
-                              }, onFailure: generalErrorHandler)
-       */
     }
 }
 
@@ -208,19 +251,19 @@ class DetailMovieViewController: UIViewController {
 extension DetailMovieViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 2
+        return result.count
     }
     
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return collectionView.dequeueReusableCell(withReuseIdentifier: CollectionViewCell.cellName,
+        return collectionView.dequeueReusableCell(withReuseIdentifier: MoviesCell.cellName,
                                                   for: indexPath)
     }
 
     func collectionView(_ collectionView: UICollectionView,
                         willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if let cell = cell as? CollectionViewCell {
-        //    cell.configure()
+        if let cell = cell as? MoviesCell {
+            cell.configure(result: result[indexPath.item])
         }
     }
     

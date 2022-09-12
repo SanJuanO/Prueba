@@ -119,7 +119,7 @@ class CollectionViewCell: UICollectionViewCell {
         contentView.addSubview(dateLabel)
         contentView.addSubview(calLabel)
         contentView.addSubview(imagefavoriteView)
-        contentView.addSubview(imgcalifView)
+        contentView.addSubview(imagestartView)
         contentView.addSubview(descriptiotextview)
 
         categoryImageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
@@ -148,9 +148,11 @@ class CollectionViewCell: UICollectionViewCell {
         calLabel.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor,constant: Constraints.padding4P).isActive = true
         calLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constraints.padding12N).isActive = true
         
-        imgcalifView.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor,constant: Constraints.padding4P).isActive = true
-        imgcalifView.trailingAnchor.constraint(equalTo: calLabel.leadingAnchor, constant: Constraints.padding12N).isActive = true
-        
+        imagestartView.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor,constant: Constraints.padding2P).isActive = true
+        imagestartView.trailingAnchor.constraint(equalTo: calLabel.leadingAnchor, constant: Constraints.padding4N).isActive = true
+        imagestartView.heightAnchor.constraint(equalToConstant: Constraints.padding16P).isActive = true
+        imagestartView.widthAnchor.constraint(equalTo: imagestartView.heightAnchor).isActive = true
+
         descriptiotextview.topAnchor.constraint(greaterThanOrEqualTo: dateLabel.bottomAnchor,constant: Constraints.padding4P).isActive = true
         descriptiotextview.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constraints.padding12P).isActive = true
         descriptiotextview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constraints.padding12N).isActive = true
