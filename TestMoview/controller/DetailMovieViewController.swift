@@ -18,7 +18,7 @@ class DetailMovieViewController: UIViewController {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "Name movie"
         label.textColor = UIColor.white
-        label.textAlignment = .left
+        label.textAlignment = .center
         return label
     }()
     
@@ -69,9 +69,9 @@ class DetailMovieViewController: UIViewController {
     public lazy var descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "dfj jksdfkjldsfkjdsjkfldskjlfsdalkjfds dsfjladsflkjdsfjklsadfladf sadfajdslfñllasdjfk sdfdlsfldsakj sadflkjadsfajkdsl jksdfjkladsfjklads kjdsffjklasdfkjladskj jkdsfakljdsfklja"
         label.textColor = UIColor.white
         label.textAlignment = .left
+        label.numberOfLines = 0
         return label
     }()
     public lazy var trailerLabel: UILabel = {
@@ -100,11 +100,10 @@ class DetailMovieViewController: UIViewController {
         return cCollectionView
     }()
  
-    
-
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
-        self.navigationController?.navigationBar.isTranslucent = true
+        self.navigationController?.setNavigationBarHidden(false, animated: animated)
+
     }
     
     
@@ -117,7 +116,15 @@ class DetailMovieViewController: UIViewController {
         super.viewDidDisappear(true)
     }
     
-  
+    
+    func configure(result: ResultMovies) {
+        let url = URL(string: Prueba.image + result.posterpath)
+        self.imageView.kf.setImage(with: url)
+        self.titleLabel.text = result.title
+        self.dateLabel.text = result.releasedate
+       self.califLabel.text = "\(result.popularity)"
+        self.descriptionLabel.text = result.overview
+    }
     
      func setupController() {
          view.backgroundColor = .black
@@ -139,7 +146,7 @@ class DetailMovieViewController: UIViewController {
          imageView.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: Constraints.padding8P).isActive = true
          imageView.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Constraints.padding32P).isActive = true
          imageView.trailingAnchor.constraint(equalTo: view.centerXAnchor, constant: Constraints.padding8N).isActive = true
-         imageView.heightAnchor.constraint(equalToConstant: Constraints.padding80P).isActive = true
+         imageView.heightAnchor.constraint(equalToConstant: Constraints.padding154P).isActive = true
 
          stackInfo.leadingAnchor.constraint(equalTo: imageView.trailingAnchor).isActive = true
          stackInfo.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: Constraints.padding32P).isActive = true

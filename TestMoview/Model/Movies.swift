@@ -18,20 +18,22 @@ private enum CodingKeys: String, CodingKey {
 
 
 struct ResultMovies: Decodable {
-    let adult: Bool
+    let adult: Bool?
     let identifier: Int
     let backdroppath: String
     let originallanguage: String
     let overview: String
     let posterpath: String
-    let releasedate: String
+    let releasedate: String?
     let voteaverage: Double
     let votecount: Int
     let popularity: Double
-    let title: String
-    let video: Bool
+    let title: String?
+    let video: Bool?
+    let name: String?
+    let firstairdate: String?
 
-
+        
 private enum CodingKeys: String, CodingKey {
     case backdroppath = "backdrop_path"
     case identifier = "id"
@@ -40,7 +42,9 @@ private enum CodingKeys: String, CodingKey {
     case releasedate = "release_date"
     case voteaverage = "vote_average"
     case votecount = "vote_count"
-    case adult, overview, popularity, title, video
+    case firstairdate = "first_air_date"
+
+    case adult, overview, popularity, title, video, name
 }
 }
 

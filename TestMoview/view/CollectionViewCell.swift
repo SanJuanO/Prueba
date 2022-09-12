@@ -6,7 +6,7 @@
 //
 
 import UIKit
-//import Kingfisher
+import Kingfisher
 
 class CollectionViewCell: UICollectionViewCell {
     
@@ -23,9 +23,6 @@ class CollectionViewCell: UICollectionViewCell {
     private lazy var imageView: UIImageView = {
         let cImageView = UIImageView()
         cImageView.translatesAutoresizingMaskIntoConstraints = false
-        cImageView.contentMode = .scaleToFill
-        cImageView.backgroundColor = .blue
-        cImageView.layer.cornerRadius = 8
         cImageView.contentMode = .scaleAspectFill
         return cImageView
     }()
@@ -33,9 +30,7 @@ class CollectionViewCell: UICollectionViewCell {
     private lazy var imagefavoriteView: UIImageView = {
         let cImageView = UIImageView()
         cImageView.translatesAutoresizingMaskIntoConstraints = false
-        cImageView.contentMode = .scaleToFill
-        cImageView.backgroundColor = .blue
-        cImageView.layer.cornerRadius = 8
+        cImageView.image = UIImage.init(named: "heart")
         cImageView.contentMode = .scaleAspectFill
         return cImageView
     }()
@@ -46,7 +41,7 @@ class CollectionViewCell: UICollectionViewCell {
         tLabel.font = UIFont.global(font: .sansLight, ofSize: 14)
         tLabel.textColor = UIColor.white
         tLabel.text = "Título"
-        tLabel.numberOfLines = 0
+        tLabel.numberOfLines = 2
         return tLabel
     }()
     
@@ -62,9 +57,7 @@ class CollectionViewCell: UICollectionViewCell {
     private lazy var imagestartView: UIImageView = {
         let cImageView = UIImageView()
         cImageView.translatesAutoresizingMaskIntoConstraints = false
-        cImageView.contentMode = .scaleToFill
-        cImageView.backgroundColor = .blue
-        cImageView.layer.cornerRadius = 8
+        cImageView.image = UIImage.init(named: "fillStarIcon")
         cImageView.contentMode = .scaleAspectFill
         return cImageView
     }()
@@ -108,10 +101,10 @@ class CollectionViewCell: UICollectionViewCell {
     }
     
     func configure(result: ResultMovies) {
-      //  let url = URL(string: Prueba.image + result.posterpath)
-        ///self.imageView.kf.setImage(with: url)
-        self.titleLabel.text = result.title
-        self.dateLabel.text = result.releasedate
+        let url = URL(string: Prueba.image + result.posterpath)
+        self.imageView.kf.setImage(with: url)
+        self.titleLabel.text = result.title ?? (result.name ?? "")
+        self.dateLabel.text = result.releasedate ?? (result.firstairdate ?? "")
         self.calLabel.text = "\(result.popularity)"
         self.descriptiotextview.text = result.overview
     }
@@ -137,30 +130,30 @@ class CollectionViewCell: UICollectionViewCell {
         imageView.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
         imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
         imageView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor).isActive = true
-        imageView.bottomAnchor.constraint(equalTo: contentView.centerYAnchor,constant: 40).isActive = true
+        imageView.bottomAnchor.constraint(equalTo: contentView.centerYAnchor,constant: Constraints.padding80N).isActive = true
             
         titleLabel.topAnchor.constraint(greaterThanOrEqualTo: imageView.bottomAnchor).isActive = true
-        titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10.0).isActive = true
-        titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10).isActive = true
+        titleLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constraints.padding12P).isActive = true
+        titleLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constraints.padding16N).isActive = true
         
 
-        imagefavoriteView.topAnchor.constraint(greaterThanOrEqualTo: imageView.bottomAnchor,constant: 5).isActive = true
-        imagefavoriteView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10.0).isActive = true
-        imagefavoriteView.heightAnchor.constraint(equalToConstant: 15).isActive = true
-        imagefavoriteView.widthAnchor.constraint(equalToConstant: 15).isActive = true
+        imagefavoriteView.topAnchor.constraint(equalTo: contentView.centerYAnchor, constant: Constraints.padding32P).isActive = true
+        imagefavoriteView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constraints.padding4N).isActive = true
+        imagefavoriteView.heightAnchor.constraint(equalToConstant: Constraints.padding16P).isActive = true
+        imagefavoriteView.widthAnchor.constraint(equalToConstant: Constraints.padding16P).isActive = true
 
-        dateLabel.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor,constant: 5).isActive = true
-        dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10.0).isActive = true
+        dateLabel.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor,constant: Constraints.padding4P).isActive = true
+        dateLabel.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constraints.padding4P).isActive = true
         
-        calLabel.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor,constant: 5).isActive = true
-        calLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10.0).isActive = true
+        calLabel.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor,constant: Constraints.padding4P).isActive = true
+        calLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constraints.padding12N).isActive = true
         
-        imgcalifView.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor,constant: 5).isActive = true
-        imgcalifView.trailingAnchor.constraint(equalTo: calLabel.leadingAnchor, constant: -10.0).isActive = true
+        imgcalifView.topAnchor.constraint(greaterThanOrEqualTo: titleLabel.bottomAnchor,constant: Constraints.padding4P).isActive = true
+        imgcalifView.trailingAnchor.constraint(equalTo: calLabel.leadingAnchor, constant: Constraints.padding12N).isActive = true
         
-        descriptiotextview.topAnchor.constraint(greaterThanOrEqualTo: dateLabel.bottomAnchor,constant: 5).isActive = true
-        descriptiotextview.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 10.0).isActive = true
-        descriptiotextview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10.0).isActive = true
-        descriptiotextview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -5.0).isActive = true
+        descriptiotextview.topAnchor.constraint(greaterThanOrEqualTo: dateLabel.bottomAnchor,constant: Constraints.padding4P).isActive = true
+        descriptiotextview.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: Constraints.padding12P).isActive = true
+        descriptiotextview.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: Constraints.padding12N).isActive = true
+        descriptiotextview.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: Constraints.padding4N).isActive = true
     }
 }

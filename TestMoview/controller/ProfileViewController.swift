@@ -27,7 +27,7 @@ class ProfileViewController: UIViewController {
         let iView = UIImageView()
         iView.translatesAutoresizingMaskIntoConstraints = false
         iView.contentMode = .scaleAspectFit
-        iView.image = UIImage(named: "icon_start")
+        iView.image = UIImage(named: "profile")
         return iView
     }()
     private let stackInfo: UIStackView = {
@@ -150,13 +150,9 @@ class ProfileViewController: UIViewController {
 
 
 @objc extension ProfileViewController {
-    private func dismissKeyboard() {
-        view.endEditing(true)
-    }
-    
  
     
-    private func showMainController() {
+    private func showMain() {
         self.navigationController?.pushViewController(MainViewController(), animated: true)
 
       /*

@@ -49,6 +49,15 @@ class LoginViewController: UIViewController {
     }()
     
 
+    internal lazy var hudView: HudView = {
+        let hView = HudView()
+        hView.translatesAutoresizingMaskIntoConstraints = false
+        hView.layer.masksToBounds = true
+        hView.layer.cornerRadius = 10.0
+        hView.isHidden = true
+        return hView
+    }()
+    
     
     private lazy var enterButton: UIButton = {
         let lButton = UIButton()
@@ -98,6 +107,11 @@ class LoginViewController: UIViewController {
         view.addSubview(passwordTextView)
          view.addSubview(enterButton)
          view.addSubview(errorLabel)
+         view.addSubview(hudView)
+         hudView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+         hudView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+         hudView.heightAnchor.constraint(equalTo: hudView.widthAnchor).isActive = true
+         hudView.widthAnchor.constraint(equalToConstant: 100).isActive = true
 
         backgroundImageView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
         backgroundImageView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
@@ -153,12 +167,15 @@ print("error")
     }
     
     private func showMainController() {
+        self.hudView.isHidden = false
     let requestAction = RequestAction(endpoint: .authenticate,
                                       body: ["username":usernameTextView.text!,"password":passwordTextView.text,"request_token":token])
         self.httpRequest.makeRequest(onAction: requestAction,
                                 response: AuthorizeMapper.self,
                                onSuccess: { (authorizeMapper) in
                                     DispatchQueue.main.async {
+                                        self.hudView.isHidden = true
+
                                         if authorizeMapper.success {
                                             self.navigationController?.pushViewController(MainViewController(), animated: true)
 
@@ -169,7 +186,9 @@ print("error")
                                     }
         }, onFailure: { (_, _) in
             DispatchQueue.main.async {
-print("error")
+                self.hudView.isHidden = true
+                self.errorLabel.isHidden = false
+                self.errorLabel.text = "Other error"
              }
          })
     }

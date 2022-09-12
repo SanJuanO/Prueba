@@ -27,7 +27,7 @@ class  NavBarView: UIView {
     // MARK: - View declaration
     var buttonRight: UIButton =  {
         let button = UIButton(frame: .zero)
-        button.setImage(UIImage(named: "menu_menu_tuto"), for: .normal)
+        button.setImage(UIImage(named: "sortIcon"), for: .normal)
         button.contentMode = .scaleAspectFit
         return button
     }()

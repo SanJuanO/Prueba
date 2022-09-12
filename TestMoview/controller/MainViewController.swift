@@ -5,13 +5,14 @@
 
         let httpRequest = HttpRequest.shared
         var result: [ResultMovies] = []
+        var option = 1
         private let navBarWithTitle: NavBarView = {
             let navBarWithTitle = NavBarView(frame: .zero)
             navBarWithTitle.translatesAutoresizingMaskIntoConstraints = false
             return navBarWithTitle
         }()
         
-        private lazy var segmentedControl:  UISegmentedControl = {
+        private lazy var segmentedControl: UISegmentedControl = {
             let sControl = UISegmentedControl()
             sControl.translatesAutoresizingMaskIntoConstraints = false
             sControl.insertSegment(withTitle: "Popular", at: 0, animated: false)
@@ -29,10 +30,21 @@
             sControl.selectedSegmentIndex = 0
             sControl.backgroundColor = UIColor.black
             sControl.selectedSegmentTintColor = UIColor.gray
-            //sControl.addTarget(self, action: #selector(valueChanged), for: .valueChanged)
+            sControl.addTarget(self, action: #selector(valueChanged), for: .valueChanged)
             return sControl
         }()
         
+        @objc func valueChanged() {
+            if self.segmentedControl.selectedSegmentIndex == 0 {
+                makeRequestpopular()
+            } else if self.segmentedControl.selectedSegmentIndex == 1 {
+makeRequesttop()
+            } else if self.segmentedControl.selectedSegmentIndex == 2 {
+makeRequestontv()
+            } else {
+makeRequestairin()
+            }
+        }
         
         private lazy var collectionView: UICollectionView = {
             let cCollectionView = UICollectionView(frame: .zero,
@@ -50,9 +62,19 @@
             return cCollectionView
         }()
     
+        internal lazy var hudView: HudView = {
+            let hView = HudView()
+            hView.translatesAutoresizingMaskIntoConstraints = false
+            hView.layer.masksToBounds = true
+            hView.layer.cornerRadius = 10.0
+            hView.isHidden = true
+            return hView
+        }()
+        
+        
         override func viewWillAppear(_ animated: Bool) {
             super.viewWillAppear(animated)
-            makeRequest()
+            makeRequestpopular()
             self.navigationController?.setNavigationBarHidden(true, animated: animated)
      }
         
@@ -66,7 +88,14 @@
              view.addSubview(navBarWithTitle)
              view.addSubview(segmentedControl)
             view.addSubview(collectionView)
+             view.addSubview(hudView)
+             hudView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+             hudView.centerYAnchor.constraint(equalTo: view.centerYAnchor).isActive = true
+             hudView.heightAnchor.constraint(equalTo: hudView.widthAnchor).isActive = true
+             hudView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+             
              self.navBarWithTitle.delegate = self
+             
             
              navBarWithTitle.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
              navBarWithTitle.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
@@ -83,20 +112,75 @@
              collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         }
 
-       func makeRequest() {
+       func makeRequestpopular() {
+           self.hudView.isHidden = false
             let requestAction = RequestAction(endpoint: .moviewpopular)
             httpRequest.makeRequest(onAction: requestAction, response: Moview.self,
                                     onSuccess: { movi in
                 DispatchQueue.main.async {
+                    self.hudView.isHidden = true
                 self.result = movi.results
                 self.collectionView.reloadData()
                 }
             }, onFailure: { (_, _) in
                 DispatchQueue.main.async {
-    print("error")
+                    self.hudView.isHidden = true
                  }
              })
        }
+        
+        func makeRequesttop() {
+            self.hudView.isHidden = false
+
+             let requestAction = RequestAction(endpoint: .toprated)
+             httpRequest.makeRequest(onAction: requestAction, response: Moview.self,
+                                     onSuccess: { movi in
+                 DispatchQueue.main.async {
+                     self.hudView.isHidden = true
+                 self.result = movi.results
+                 self.collectionView.reloadData()
+                 }
+             }, onFailure: { (_, _) in
+                 DispatchQueue.main.async {
+                     self.hudView.isHidden = true
+                  }
+              })
+        }
+        
+        func makeRequestontv() {
+            self.hudView.isHidden = false
+
+             let requestAction = RequestAction(endpoint: .tvontheair)
+             httpRequest.makeRequest(onAction: requestAction, response: Moview.self,
+                                     onSuccess: { movi in
+                 DispatchQueue.main.async {
+                     self.hudView.isHidden = true
+                 self.result = movi.results
+                 self.collectionView.reloadData()
+                 }
+             }, onFailure: { (_, _) in
+                 DispatchQueue.main.async {
+                     self.hudView.isHidden = true
+                  }
+              })
+        }
+        func makeRequestairin() {
+            self.hudView.isHidden = false
+
+             let requestAction = RequestAction(endpoint: .tvairingtoday)
+             httpRequest.makeRequest(onAction: requestAction, response: Moview.self,
+                                     onSuccess: { movi in
+                 DispatchQueue.main.async {
+                     self.hudView.isHidden = true
+                 self.result = movi.results
+                 self.collectionView.reloadData()
+                 }
+             }, onFailure: { (_, _) in
+                 DispatchQueue.main.async {
+                     self.hudView.isHidden = true
+                  }
+              })
+        }
         
         func showAlert() {
             let alert: UIAlertController = UIAlertController(title: "What do you want to do?", message: "", preferredStyle: .actionSheet)
@@ -142,6 +226,7 @@
         func collectionView(_ collectionView: UICollectionView,
                             didSelectItemAt indexPath: IndexPath) {
            let productsViewController = DetailMovieViewController()
+            productsViewController.configure(result: self.result[indexPath.item])
             self.navigationController?.pushViewController(productsViewController, animated: true)
         }
 
