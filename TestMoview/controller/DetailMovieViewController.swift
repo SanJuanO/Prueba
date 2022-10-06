@@ -228,7 +228,6 @@ class DetailMovieViewController: UIViewController {
          collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: Constraints.padding16N).isActive = true
          collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constraints.padding16P).isActive = true
          collectionView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-
     }
 }
 
