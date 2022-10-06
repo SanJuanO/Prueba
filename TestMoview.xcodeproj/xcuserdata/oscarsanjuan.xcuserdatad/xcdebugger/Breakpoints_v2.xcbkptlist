@@ -34,6 +34,38 @@
             endingLineNumber = "54"
             landmarkName = "saveObject(typeObject:data:completion:)"
             landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "2F95D7C9-234A-4423-A96D-07B12B8802D2 - 8bc8f8cd46676c2f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.NSManagedObjectContext) -&gt; () in TestMoview.CoreDataService.saveObject&lt;&#x3c4;_0_0 where &#x3c4;_0_0: __C.NSManagedObject&gt;(typeObject: &#x3c4;_0_0.Type, data: Swift.Dictionary&lt;Swift.String, Any&gt;, completion: Swift.Optional&lt;(&#x3c4;_0_0) -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "TestMoview"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oscarsanjuan/Documents/GitHub/Prueba/TestMoview/Sesion/CoreDataService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "334">
+               </Location>
+               <Location
+                  uuid = "2F95D7C9-234A-4423-A96D-07B12B8802D2 - 8bc8f8cd46676c2f"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (__C.NSManagedObjectContext) -&gt; () in TestMoview.CoreDataService.saveObject&lt;&#x3c4;_0_0 where &#x3c4;_0_0: __C.NSManagedObject&gt;(typeObject: &#x3c4;_0_0.Type, data: Swift.Dictionary&lt;Swift.String, Any&gt;, completion: Swift.Optional&lt;(&#x3c4;_0_0) -&gt; ()&gt;) -&gt; ()"
+                  moduleName = "TestMoview"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/oscarsanjuan/Documents/GitHub/Prueba/TestMoview/Sesion/CoreDataService.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "54"
+                  endingLineNumber = "54"
+                  offsetFromSymbolStart = "465">
+               </Location>
+            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

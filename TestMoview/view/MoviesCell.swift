@@ -6,16 +6,14 @@
 //
 
 import UIKit
-import YouTubePlayerKit
-import YoutubeKit
-
+import AVFoundation
 
 class MoviesCell: UICollectionViewCell {
     
     static let cellName: String = "collectionViewCell"
     
-    private lazy var videoyutube: YTSwiftyPlayer = {
-        let youtube = YTSwiftyPlayer()
+    private lazy var video: UIView = {
+        let youtube = UIView()
         youtube.translatesAutoresizingMaskIntoConstraints = false
         return youtube
     }()
@@ -30,18 +28,24 @@ class MoviesCell: UICollectionViewCell {
     }
     
     func configure(result: Movies) {
+        let playerAV = AVPlayer(url: URL(string: "https://www.youtube.com/watch?v=NHft1RKE3YM")!)
+        
+        let playerLayerAV = AVPlayerLayer(player: playerAV)
+                playerLayerAV.frame = self.video.bounds
+                self.video.layer.addSublayer(playerLayerAV)
+                playerLayerAV.videoGravity = .resizeAspectFill
+                playerAV.play()
 
-   videoyutube.loadPlayerHTML("https://www.youtube.com/watch?v=NHft1RKE3YM")
         
     }
     
     
     func setupCell() {
-        contentView.addSubview(videoyutube)
-        videoyutube.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
-        videoyutube.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
-        videoyutube.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
-        videoyutube.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
+        contentView.addSubview(video)
+        video.topAnchor.constraint(equalTo: contentView.topAnchor).isActive = true
+        video.leadingAnchor.constraint(equalTo: contentView.leadingAnchor).isActive = true
+        video.centerXAnchor.constraint(equalTo: contentView.centerXAnchor).isActive = true
+        video.centerYAnchor.constraint(equalTo: contentView.centerYAnchor).isActive = true
         
     
     }
